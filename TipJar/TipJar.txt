@@ -1,0 +1,18 @@
+pragma solidity ^0.6.0;
+
+contract TipJar {
+    
+    address public owner;
+    
+    constructor() public payable {
+        owner = msg.sender;
+    }
+    
+    function withdraw() public payable {
+        require(msg.sender == owner, "not owner");
+        msg.sender.transfer(address(this).balance);
+    }
+    
+    
+    
+}
