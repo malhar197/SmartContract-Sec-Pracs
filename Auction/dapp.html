@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src = "https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<div>
+	Count??
+	<span id = "count">
+		
+	</span>
+	<div>
+		<button id = "increment">Increment</button>
+	</div>
+	<div>
+		<button id = "decrement">Decrement</button>
+	</div>
+	<div>
+		<button id = "getCount">Get Count</button>
+	</div>
+	<div id = "log"></div>
+</div>
+<script>
+	var web3;
+	var counter;
+	const url = "http://localhost:8545";
+	const contractAddress = "";
+	const abi = "";
+
+	function log (message){
+		$log("#log").append('<p>').text(message);
+	}
+
+	function waitForTransactionReceipt(hash){
+		web3.eth.transactionReceipt(hash,(err,receipt) => {
+			cb(receipt);
+		});
+	}
+
+	$(function() {
+
+		$("#getCount").click((e)=>{
+			e.preventDefault();
+			log("Calling getCount on Counter contract");
+		});
+
+		$("#increment").click(e) => {
+			e.preventDefault();
+
+			log("Calling increment on counter contract");
+			var account = web3.eth.account[0];
+
+			counter.increment.sendTransaction(
+				{from:account,to: contractAddress }(err,hash) => {
+					waitForTransactionReceipt(hash,(receipt) =>{
+						log("Calling increment on counter contract is successful. You may call get Count");
+					})
+		}
+			);
+		};
+
+		var web3 = new Web3(url);
+		counter = web3.eth.contract(abi).at(contractAddress);
+		$("#getCount").click();
+		
+	});
+
+</script>
+</body>
+</html>
